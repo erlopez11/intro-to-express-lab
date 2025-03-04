@@ -56,24 +56,24 @@ app.get('/shoes', (req, res) => {
     const type = req.query.type;
 
 
-
-    function filterShoes(shoe) {
-        if (minPrice) {
-            return shoe.price > minPrice
-        } else if (maxPrice) {
-            return shoe.price < maxPrice
-        } else if (type) {
-            return shoe.type === type
-        }
-    }
-
+    let filteredShoes = shoes;
 
     if (Object.keys(req.query).length === 0) {
         res.send(shoes);
     } else {
-        const filteredShoes = shoes.filter(filterShoes);
-        res.send(filteredShoes)
+        if(minPrice) {
+            filteredShoes = filteredShoes.filter(shoe => shoe.price > minPrice);
+        }
+
+        if(maxPrice) {
+            filteredShoes = filteredShoes.filter(shoe => shoe.price < maxPrice);
+        }
+
+        if (type) {
+            filteredShoes = filteredShoes.filter(shoe => shoe.type === type);
+        }
     }
+    res.send(filteredShoes);
 
 });
 

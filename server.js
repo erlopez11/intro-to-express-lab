@@ -55,6 +55,8 @@ app.get('/shoes', (req, res) => {
     const maxPrice = req.query.maxPrice;
     const type = req.query.type;
 
+
+
     function filterShoes(shoe) {
         if (minPrice) {
             return shoe.price > minPrice
@@ -65,8 +67,8 @@ app.get('/shoes', (req, res) => {
         }
     }
 
-    if (!req.query) {
-        console.log(shoes);
+
+    if (Object.keys(req.query).length === 0) {
         res.send(shoes);
     } else {
         const filteredShoes = shoes.filter(filterShoes);
